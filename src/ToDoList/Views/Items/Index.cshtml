@@ -1,10 +1,9 @@
-﻿@model IEnumerable<ToDoList.Models.Item>
+﻿@{ 
+    ViewData["Title"] = "To Do List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
-<html>
-<head>
-    <title>To Do List</title>
-</head>
-<body>
+@model IEnumerable<ToDoList.Models.Item>
     <h2>To Do List</h2>
     <hr />
     <h4>@Html.DisplayNameFor(model => model.Description)</h4>
@@ -14,6 +13,4 @@
             <li>@Html.DisplayFor(modelItem => listItem.Description) | @Html.ActionLink("Details", "Details", new { id = listItem.ItemId }) | @Html.ActionLink("Edit", "Edit", new { id = listItem.ItemId }) | @Html.ActionLink("Delete", "Delete", new { id = listItem.ItemId })</li>
         }
     </ul>
-    <button>@Html.ActionLink("Add new item", "Create")</button>
-</body>
-</html>
+    <p>@Html.ActionLink("Add new item", "Create")</p>

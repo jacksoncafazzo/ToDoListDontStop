@@ -37,6 +37,8 @@ namespace ToDoList
 
             app.UseIISPlatformHandler();
 
+            app.UseStaticFiles();
+
             //sets up our default routing
             app.UseMvc(routes =>
             {

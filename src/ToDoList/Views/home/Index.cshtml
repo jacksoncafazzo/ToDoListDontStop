@@ -1,11 +1,7 @@
-﻿<html>
-<head>
-    <title>To Do List</title>
-</head>
-<body>
-    <h2>Welcome to the To Do List!</h2>
+﻿@{
+    ViewData["Title"] = "To Do List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Welcome to the To Do List!</h2>
 
-    <p>@Html.ActionLink("Back to list", "Index")</p> < Try to get this to work!
-
-</body>
-</html>
+<p>@Html.ActionLink("Check out the List", "Index", "Items")</p> 
