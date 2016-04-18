@@ -23,5 +23,19 @@ namespace ToDoList.Controllers
             var thisItem = db.Items.FirstOrDefault(x => x.ItemId == id);
             return View(thisItem);
         }
+
+        //Create new Items
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Item item)
+        {
+            db.Items.Add(item);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }
