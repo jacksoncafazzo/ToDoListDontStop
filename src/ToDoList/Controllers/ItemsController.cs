@@ -1,69 +1,57 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Microsoft.AspNet.Mvc;
+using Microsoft.AspNet.Mvc.Rendering;
+using Microsoft.Data.Entity;
 using ToDoList.Models;
-
-// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ToDoList.Controllers
 {
     public class ItemsController : Controller
     {
-        public ToDoListContext db = new ToDoListContext();
+        private ToDoListContext db = new ToDoListContext();
         public IActionResult Index()
-
         {
-            return View(db.Items.ToList());
+            return View(db.Items.Include(x => x.Category).ToList());
         }
-        //Details Method
         public IActionResult Details(int id)
         {
             var thisItem = db.Items.FirstOrDefault(x => x.ItemId == id);
             return View(thisItem);
         }
-
-        //Create new Items
-        public IActionResult Create()
+        public ActionResult Create()
         {
+            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name");
             return View();
         }
-
         [HttpPost]
-        public IActionResult Create(Item item)
+        public ActionResult Create(Item item)
         {
             db.Items.Add(item);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
-        //Edit Items
-        public IActionResult Edit(int id)
+        public ActionResult Edit(int id)
         {
-            var thisItem = db.Items.FirstOrDefault(x => x.ItemId == id);
-                return View(thisItem);
+            var thisItem = db.Items.FirstOrDefault(d => d.ItemId == id);
+            ViewBag.CategoryId = new SelectList(db.Categories, "CategoryId", "Name");
+            return View(thisItem);
         }
-
         [HttpPost]
-        public IActionResult Edit(Item item)
+        public ActionResult Edit(Item item)
         {
-            db.Entry(item).State = Microsoft.Data.Entity.EntityState.Modified;
+            db.Entry(item).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
-        //Deletes a Task
-        public IActionResult Delete(int id)
+        public ActionResult Delete(int id)
         {
-            var thisItem = db.Items.FirstOrDefault(x => x.ItemId == id);
-            return View(thisItem); 
+            var thisItem = db.Items.FirstOrDefault(d => d.ItemId == id);
+            return View(thisItem);
         }
-
         [HttpPost, ActionName("Delete")]
-        public IActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id)
         {
-            var thisItem = db.Items.FirstOrDefault(x => x.ItemId == id);
+            var thisItem = db.Items.FirstOrDefault(d => d.ItemId == id);
             db.Items.Remove(thisItem);
             db.SaveChanges();
             return RedirectToAction("Index");
