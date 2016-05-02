@@ -1,0 +1,16 @@
+﻿@model IEnumerable<ToDoList.Models.Category>
+<h1>@Html.ActionLink("creeeeete!", "Create", "Categories")</h1>
+
+    <ul>
+@using (Html.BeginForm("Delete", "Categories", FormMethod.Post))
+{
+        @foreach (var category in Model)
+        {
+                @Html.HiddenFor(m => category.CategoryId)
+            <li>
+                @category.Name
+                <button name="categoryId" value="@category.CategoryId">Delete</button>
+            </li>
+        }
+}
+    </ul>

@@ -1,0 +1,10 @@
+﻿@model ToDoList.Models.Category
+
+@using (Html.BeginForm("Create", "Categories", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name)
+        @Html.EditorFor(m => m.Name)
+        <button type="submit">push me</button>
+    </div>
+}
